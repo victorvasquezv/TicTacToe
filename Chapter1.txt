@@ -1,0 +1,80 @@
+import Foundation
+var trackPlayer : Bool! = true
+
+enum Tile{
+    case O
+    case X
+    case Blank
+    case Invalid
+}
+
+enum Winner{
+    case PlayerOWon
+    case PlayerXWon
+    case StillPlaying
+}
+
+struct Board {
+    
+    public var pressByX : [Int]? = []
+    public var pressByO : [Int]? = []
+    
+    private let winCombos =
+    ["Optional([0, 1, 2])",
+    "Optional([0, 3, 6])",
+    "Optional([0, 4, 8])",
+    "Optional([1, 4, 7])",
+    "Optional([2, 5, 8])",
+    "Optional([3, 4, 5])",
+    "Optional([6, 7, 8])",
+    "Optional([2, 4, 7])"]
+
+    
+    mutating func checkTile(tester: Int)-> Tile {
+        if trackPlayer == true{
+            pressByX?.append(tester)
+            print ("X played")
+            trackPlayer = false
+            return .X
+        }
+        else if trackPlayer == false{
+            pressByO?.append(tester)
+            print ("O played")
+            trackPlayer = true
+            return .O
+        }
+        else{
+            print("returned isInvalid")
+            return .Invalid
+        }
+    }
+    
+    func checkForWinner() -> Winner{
+        
+        var testForX = "\(pressByX))"
+        var testForO = "\(pressByO))"
+        
+        print("O owns \(testForO)")
+        print("X owns \(testForX)")
+        
+        if winCombos.contains(testForO){
+            print("Winner is O")
+            return .PlayerOWon
+        }
+        else if winCombos.contains(testForX){
+            print("Winner is X")
+            return .PlayerXWon
+        }
+        else {
+            return .StillPlaying
+        }
+    }
+    mutating func reset() {
+        pressByO?.removeAll()
+        pressByX?.removeAll()
+        trackPlayer = true
+    }
+    init() {
+        trackPlayer = true
+    }
+}
