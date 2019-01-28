@@ -1,0 +1,56 @@
+import UIKit
+class ViewController: UIViewController {
+
+   let gameLabel = ["Team X's turn", "Team O's turn", "Invalid Move", "Team X Won", "Team O Won"]
+     var instanceOfBoard = Board()
+    
+    @IBOutlet weak var gameAnnouncer: UILabel!
+    @IBAction func buttonPressed(_ sender: Any) {
+        switch instanceOfBoard.checkTile(tester: (sender as AnyObject).tag) {
+        case .O :
+            (sender as AnyObject).setTitle("O", for: UIControl.State.normal)
+            gameAnnouncer.text = gameLabel[0]
+        case .X :
+            (sender as AnyObject).setTitle("X", for: UIControl.State.normal)
+            gameAnnouncer.text = gameLabel[1]
+        case .Invalid:
+            gameAnnouncer.text = gameLabel[2]
+        default: print("nothing happened")
+        }
+        constantlyCheckForWinner()
+    }
+    
+    func constantlyCheckForWinner() {
+        let result = instanceOfBoard.checkForWinner()
+        switch result {
+        case .PlayerOWon:
+            gameAnnouncer.text = gameLabel[4]
+        case .PlayerXWon:
+            gameAnnouncer.text = gameLabel[3]
+        case .StillPlaying:
+            break
+        default: break
+        }
+    }
+    
+    
+    @IBAction func resetButton(_ sender: Any) {
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        gameAnnouncer.text = gameLabel[0]
+        
+    }
+
+    
+    }
